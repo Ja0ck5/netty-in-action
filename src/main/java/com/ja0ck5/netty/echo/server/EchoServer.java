@@ -1,4 +1,4 @@
-package com.ja0ck5.netty.echo;
+package com.ja0ck5.netty.echo.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

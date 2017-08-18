@@ -1,4 +1,4 @@
-package com.ja0ck5.netty.echo;
+package com.ja0ck5.netty.echo.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
