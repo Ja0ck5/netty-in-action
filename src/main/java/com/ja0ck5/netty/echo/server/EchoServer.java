@@ -14,19 +14,15 @@ import java.net.InetSocketAddress;
  */
 public class EchoServer {
 
-    private final int port;
-
-    public EchoServer(int port) {
-        this.port = port;
-    }
+    private static final int port = 9999;
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
+        /*if (args.length != 1) {
             System.out.println("Usage " + EchoServer.class.getSimpleName() + " <port>");
         }
 
-        int port = Integer.parseInt(args[0]);
-        new EchoServer(port).start();
+        int port = Integer.parseInt(args[0]);*/
+        new EchoServer().start();
     }
 
     public void start() throws Exception {
@@ -37,7 +33,7 @@ public class EchoServer {
             // 创建 ServerBootstrap
             ServerBootstrap b = new ServerBootstrap();
             b.group(group).channel(NioServerSocketChannel.class)// 制定使用 Nio 传输 Channel
-                    .localAddress(new InetSocketAddress(port))// 使用制定的端口设置套接字地址
+                    .localAddress(new InetSocketAddress(this.port))// 使用制定的端口设置套接字地址
                     .childHandler(new ChannelInitializer<SocketChannel>() {// 添加一个 EchoserverHandler 到 子Channel 的 ChannelPipeline
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             // EchoServerHandler 被标注为 @Shareable ,所以我们总是可以使用同样的实例
