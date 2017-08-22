@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Unit test for simple App.
@@ -40,7 +41,7 @@ public class AppTest
 
         list.stream().parallel().forEach(i -> System.out.println(i + " id: " + Thread.currentThread().getId() + ", name: " + Thread.currentThread().getName()));
 
-        list.parallelStream().forEach(i -> System.out.println("second " + i + " id: " + Thread.currentThread().getId() + ", name: " + Thread.currentThread().getName()));
+        list.parallelStream().forEach(i -> Logger.getLogger("parallel").info("second " + i + " id: " + Thread.currentThread().getId() + ", name: " + Thread.currentThread().getName()));
 
         Thread.sleep(50000);
     }
