@@ -37,7 +37,7 @@ public class ChatServer {
 		return future;
 	}
 
-	private ChannelInitializer<Channel> createInitializer(ChannelGroup channelGroup) {
+	protected ChannelInitializer<Channel> createInitializer(ChannelGroup channelGroup) {
 		return new ChatServerInitializer(channelGroup);
 	}
 
