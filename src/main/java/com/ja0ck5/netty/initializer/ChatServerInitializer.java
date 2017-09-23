@@ -35,7 +35,7 @@ public class ChatServerInitializer extends ChannelInitializer<Channel> {
 		// 下一个 ChannelHandler 只会收到完整的 Http 请求
 		pipeline.addLast(new HttpObjectAggregator(1 << 16));
 		// 处理 不发送到 ws URI 的请求
-		pipeline.addLast(new HttpRequestHandler("ws"));
+		pipeline.addLast(new HttpRequestHandler("/ws"));
 		/**
 		 * 
 		 * 按照 WebSocket 规范的要求，处理 WebSocket 升级握手
@@ -51,7 +51,7 @@ public class ChatServerInitializer extends ChannelInitializer<Channel> {
 		 * {@link HttpObjectAggregator} 和 {@link HttpRequestHandler}
 		 * 
 		 */
-		pipeline.addLast(new WebSocketServerProtocolHandler("ws"));
+		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 		/**
 		 * 处理 {@link io.netty.handler.codec.http.websocketx.TextWebSocketFrame}
 		 * 和 握手事件

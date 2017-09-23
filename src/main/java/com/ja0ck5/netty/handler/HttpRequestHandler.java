@@ -23,7 +23,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 		URL location = HttpRequestHandler.class.getProtectionDomain().getCodeSource().getLocation();
 		try {
 			String path = location.toURI() + "index.html";
-			path = !path.contains("files:") ? path : path.substring(5);
+			path = !path.contains("file:") ? path : path.substring(5);
 			INDEX = new File(path);
 		} catch (URISyntaxException e) {
 			throw new IllegalStateException("Unable to locate index.html", e);
@@ -38,7 +38,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 	protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
 		// 如果请求了 WebSocket 协议升级，则增加引用计数(调用 retain 方法) 并将它传递给下一个
 		// ChannelInboundHandler
-		if (wsUri.equalsIgnoreCase(request.uri())) {
+		String requestUri = request.uri();
+		if (wsUri.equalsIgnoreCase(requestUri)) {
 			ctx.fireChannelRead(request.retain());
 		} else {
 			// 处理 100 Continue 请求以符合 HTTP 1.1 规范
