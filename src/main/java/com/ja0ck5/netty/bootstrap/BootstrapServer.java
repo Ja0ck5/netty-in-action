@@ -10,11 +10,19 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Ja0ck5 on 2017/9/12.
  */
 public class BootstrapServer {
+
+    public static List<Long> listInMyThread = new ArrayList<>();
+
+    public static ConcurrentHashMap<Long,Long> cMapInMyThread = new ConcurrentHashMap<>();
+
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -32,6 +40,15 @@ public class BootstrapServer {
 
         // 通过配置好的 ServerBootstrap 的实例绑定该 Channel
         ChannelFuture future = serverBootstrap.bind(new InetSocketAddress(8080));
+
+        new Thread(() -> {
+            for (int i=0;i<5000000;i++){
+//                listInMyThread.add(Long.valueOf(i));
+                long iLong = Long.valueOf(i);
+                cMapInMyThread.put(iLong,iLong);
+            }
+        }).start();
+
         future.addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.isSuccess()) {
                 System.out.println("Server bound");
